@@ -1,477 +1,52 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Frontend Skills Radar</title>
-<style>
-  :root{
-    --bg:#0f1724;
-    --card:#0b1220;
-    --accent:#60a5fa;
-    --muted:#94a3b8;
-    --glass: rgba(255,255,255,0.03);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: linear-gradient(180deg,#071028 0%, #07121a 100%);
-    color:#e6eef8;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:32px;
-  }
-
-  .container{
-    width:100%;
-    max-width:1100px;
-    display:grid;
-    grid-template-columns: 420px 1fr;
-    gap:28px;
-  }
-
-  .card{
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:12px;
-    padding:18px;
-    box-shadow: 0 6px 24px rgba(2,6,23,0.6);
-    border:1px solid rgba(255,255,255,0.03);
-  }
-
-  header h1{
-    margin:0 0 6px 0;
-    font-size:20px;
-  }
-  header p{margin:0;color:var(--muted);font-size:13px}
-
-  .inputs{
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-    margin-top:14px;
-  }
-
-  .input-row{
-    display:grid;
-    grid-template-columns: 1fr 84px;
-    gap:10px;
-    align-items:center;
-    padding:10px;
-    background:var(--glass);
-    border-radius:8px;
-    border:1px solid rgba(255,255,255,0.02);
-  }
-
-  .input-meta{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-  }
-  .input-meta strong{font-size:13px}
-  .input-meta small{font-size:11px;color:var(--muted)}
-
-  .controls{
-    display:flex;
-    gap:6px;
-    align-items:center;
-  }
-
-  input[type="range"]{
-    width:100%;
-    -webkit-appearance:none;
-    background:transparent;
-    height:28px;
-  }
-  input[type="range"]::-webkit-slider-runnable-track{
-    height:6px;border-radius:999px;background:linear-gradient(90deg,#1f2937,#111827);
-  }
-  input[type="range"]::-webkit-slider-thumb{
-    -webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);margin-top:-5px;box-shadow:0 2px 6px rgba(96,165,250,0.25);
-  }
-  .value{
-    min-width:64px;text-align:right;font-variant-numeric:tabular-nums;font-weight:600;
-  }
-
-  /* Radar panel */
-  .radar-wrap{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:18px;
-  }
-  .radar-card{
-    width:100%;
-    max-width:640px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-radius:12px;
-    padding:20px;
-    display:flex;
-    gap:14px;
-    align-items:center;
-    justify-content:center;
-    border:1px solid rgba(255,255,255,0.03);
-  }
-  .radar-left{
-    flex:1 1 420px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-  }
-
-  .legend{
-    width:220px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    padding-left:12px;
-  }
-  .legend h3{margin:0;font-size:14px}
-  .legend p{margin:0;color:var(--muted);font-size:13px}
-  .legend .item{display:flex;align-items:center;gap:8px}
-  .swatch{width:14px;height:14px;border-radius:4px;background:linear-gradient(180deg,var(--accent),#3b82f6);box-shadow:0 2px 6px rgba(59,130,246,0.2)}
-  .muted{color:var(--muted);font-size:12px}
-
-  /* responsive */
-  @media (max-width:980px){
-    .container{grid-template-columns:1fr; padding:0 8px;}
-    .legend{width:100%}
-  }
-
-  /* small transition for the polygon */
-  .radar-polygon{
-    transition: all 300ms ease;
-    transform-origin:center;
-  }
-
-  footer{margin-top:12px;color:var(--muted);font-size:12px;text-align:center}
-  .btn{
-    display:inline-block;padding:10px 12px;border-radius:8px;background:rgba(96,165,250,0.12);color:var(--accent);border:1px solid rgba(96,165,250,0.12);cursor:pointer;font-weight:600;font-size:13px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Frontend Skills Radar</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <header>
-        <h1>Frontend Skills Radar</h1>
-        <p>Enter percentages for each area (0–100). The radar updates live to show your shape.</p>
-      </header>
+  <div class="container fade-in">
+    <header class="header">
+      <h1>Frontend Skills Radar</h1>
+      <p>Visualize your technical and professional strengths in real-time</p>
+    </header>
 
-      <div class="inputs" id="inputs">
-        <!-- Input rows created by JS for accessibility -->
-      </div>
-
-      <div style="display:flex;gap:8px;margin-top:14px;align-items:center">
-        <button class="btn" id="resetBtn" title="Reset to defaults">Reset</button>
-        <button class="btn" id="fillDefaults" title="Fill balanced defaults">Balanced Defaults</button>
-        <div style="flex:1"></div>
-        <span class="muted">Tip: drag a slider or type the %</span>
-      </div>
-
-      <footer>Created for a frontend industry sprint — interactive radar to visualize strengths & gaps.</footer>
-    </div>
-
-    <div class="radar-card card">
-      <div class="radar-left">
-        <!-- SVG radar -->
-        <svg id="radarSvg" width="420" height="420" viewBox="0 0 420 420" aria-label="Skills radar chart">
+    <main class="main-grid">
+      <section class="radar-section">
+        <svg id="radarSvg" width="500" height="500" viewBox="0 0 500 500" aria-label="Skills radar chart">
           <defs>
             <linearGradient id="fillGrad" x1="0" x2="1">
-              <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.18"/>
-              <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.08"/>
+              <stop offset="0%" stop-color="#5eead4" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="#14b8a6" stop-opacity="0.08"/>
             </linearGradient>
             <linearGradient id="strokeGrad" x1="0" x2="1">
-              <stop offset="0%" stop-color="#7dd3fc"/>
-              <stop offset="100%" stop-color="#60a5fa"/>
+              <stop offset="0%" stop-color="#5eead4"/>
+              <stop offset="100%" stop-color="#14b8a6"/>
             </linearGradient>
           </defs>
-
-          <!-- grid rings & axes will be drawn by JS, placeholder group -->
           <g id="radarGrid"></g>
-
-          <!-- polygon for the user's data -->
-          <g transform="translate(210,210)">
-            <polygon id="radarPoly" class="radar-polygon" points="" fill="url(#fillGrad)" stroke="url(#strokeGrad)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
-            <!-- small handles/circles at vertex points -->
+          <g transform="translate(250,250)">
+            <polygon id="radarPoly" class="radar-polygon" points="" fill="url(#fillGrad)" stroke="url(#strokeGrad)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></polygon>
             <g id="radarDots"></g>
           </g>
         </svg>
-      </div>
+      </section>
 
-      <aside class="legend">
-        <h3>Axes / Criteria</h3>
-        <div class="item"><div class="swatch"></div><div><strong>Core Technical Skills</strong><div class="muted">HTML, CSS, JS</div></div></div>
-        <div class="item"><div style="width:14px;height:14px;border-radius:4px;background:#fb923c"></div><div><strong>Frameworks & Tooling</strong><div class="muted">React, Git, Vite</div></div></div>
-        <div class="item"><div style="width:14px;height:14px;border-radius:4px;background:#f472b6"></div><div><strong>UI/UX & Design Mindset</strong><div class="muted">Accessibility, Figma</div></div></div>
-        <div class="item"><div style="width:14px;height:14px;border-radius:4px;background:#34d399"></div><div><strong>Power Skills</strong><div class="muted">Communication, teamwork</div></div></div>
-        <div class="item"><div style="width:14px;height:14px;border-radius:4px;background:#a78bfa"></div><div><strong>Emerging Tech</strong><div class="muted">AI, Performance, Headless CMS</div></div></div>
-        <div class="item"><div style="width:14px;height:14px;border-radius:4px;background:#fca5a5"></div><div><strong>Professional Growth</strong><div class="muted">Testing, CI/CD, Version control</div></div></div>
+      <aside class="inputs-section">
+        <div id="inputs"></div>
 
-        <div style="margin-top:6px" class="muted">Use the sliders to change percents — the polygon will morph to match.</div>
+        <div class="buttons-row">
+          <button class="btn" id="resetBtn" title="Reset to zeros">Reset</button>
+          <button class="btn" id="fillDefaults" title="Fill balanced defaults">Balanced Defaults</button>
+          <div class="tip">Tip: drag a slider or type the %</div>
+        </div>
       </aside>
-    </div>
+    </main>
   </div>
 
-<script>
-/*
-  Frontend Skills Radar
-  - 6 axes
-  - percentage inputs 0..100
-  - maps percentage to radius and draws polygon on SVG
-  - accessible: inputs have labels and numeric input mirrors
-*/
-
-(function(){
-  // criteria list in order (clockwise starting -90deg)
-  const axes = [
-    { key: 'coreTech', label: 'Core Technical Skills', desc: 'HTML, CSS, JavaScript fundamentals' },
-    { key: 'frameworks', label: 'Frameworks & Tooling', desc: 'React, Next.js, Git, build tools' },
-    { key: 'uiux', label: 'UI/UX & Design Mindset', desc: 'Responsive design, accessibility, Figma' },
-    { key: 'power', label: 'Power Skills (Soft Skills)', desc: 'Communication, collaboration, problem-solving' },
-    { key: 'emerging', label: 'Emerging Technologies & Trends', desc: 'AI, performance, headless CMS, AR/VR' },
-    { key: 'practices', label: 'Professional Growth & Practices', desc: 'Testing, deployment, CI/CD' }
-  ];
-
-  // radius setup
-  const size = 420;
-  const center = { x: size/2, y: size/2 };
-  const maxRadius = 150; // px from center
-  const ringSteps = [25,50,75,100]; // percent rings to draw
-
-  // default values (balanced)
-  const defaults = {
-    coreTech: 70,
-    frameworks: 65,
-    uiux: 60,
-    power: 60,
-    emerging: 40,
-    practices: 55
-  };
-
-  // create input rows
-  const inputsEl = document.getElementById('inputs');
-
-  axes.forEach((a, idx) => {
-    const row = document.createElement('div');
-    row.className = 'input-row';
-    // left meta
-    const meta = document.createElement('div');
-    meta.className = 'input-meta';
-    const strong = document.createElement('strong');
-    strong.textContent = `${idx+1}. ${a.label}`;
-    const small = document.createElement('small');
-    small.textContent = a.desc;
-    meta.appendChild(strong);
-    meta.appendChild(small);
-
-    // controls
-    const controls = document.createElement('div');
-    controls.className = 'controls';
-    const range = document.createElement('input');
-    range.type = 'range';
-    range.min = 0; range.max = 100; range.step = 1;
-    range.id = 'range_' + a.key;
-    range.setAttribute('aria-label', a.label + ' percentage');
-    range.value = defaults[a.key] ?? 50;
-
-    const number = document.createElement('input');
-    number.type = 'number';
-    number.min = 0; number.max = 100; number.step = 1;
-    number.value = range.value;
-    number.className = 'value';
-    number.id = 'num_' + a.key;
-    number.setAttribute('aria-label', a.label + ' numeric percentage');
-
-    // sync range and number
-    range.addEventListener('input', ()=>{ number.value = range.value; update(); });
-    number.addEventListener('input', ()=>{
-      let v = parseInt(number.value||0,10);
-      if (Number.isNaN(v)) v = 0;
-      v = Math.max(0, Math.min(100, v));
-      number.value = v;
-      range.value = v;
-      update();
-    });
-
-    controls.appendChild(range);
-    controls.appendChild(number);
-
-    row.appendChild(meta);
-    row.appendChild(controls);
-    inputsEl.appendChild(row);
-  });
-
-  // helpers to read current values
-  function readValues(){
-    const vals = {};
-    axes.forEach(a => {
-      const r = document.getElementById('range_' + a.key);
-      vals[a.key] = Math.max(0, Math.min(100, Number(r.value || 0)));
-    });
-    return vals;
-  }
-
-  // draw grid and axes
-  const svgNS = 'http://www.w3.org/2000/svg';
-  const gridGroup = document.getElementById('radarGrid');
-  function drawGrid(){
-    // clear
-    gridGroup.innerHTML = '';
-
-    // center translate handled later - here coordinates absolute
-    // draw rings
-    ringSteps.forEach(percent => {
-      const r = (percent/100) * maxRadius;
-      const ring = document.createElementNS(svgNS, 'circle');
-      ring.setAttribute('cx', center.x);
-      ring.setAttribute('cy', center.y);
-      ring.setAttribute('r', r.toString());
-      ring.setAttribute('fill', 'none');
-      ring.setAttribute('stroke', 'rgba(255,255,255,0.03)');
-      ring.setAttribute('stroke-width', '1');
-      gridGroup.appendChild(ring);
-    });
-
-    // axes lines and labels
-    axes.forEach((a, i)=>{
-      const angle = -Math.PI/2 + (2*Math.PI*i/axes.length); // start at -90deg
-      const x2 = center.x + Math.cos(angle) * maxRadius;
-      const y2 = center.y + Math.sin(angle) * maxRadius;
-
-      // axis line
-      const line = document.createElementNS(svgNS, 'line');
-      line.setAttribute('x1', center.x);
-      line.setAttribute('y1', center.y);
-      line.setAttribute('x2', x2);
-      line.setAttribute('y2', y2);
-      line.setAttribute('stroke', 'rgba(255,255,255,0.04)');
-      line.setAttribute('stroke-width', '1');
-      gridGroup.appendChild(line);
-
-      // label (slightly beyond axis)
-      const labelX = center.x + Math.cos(angle) * (maxRadius + 22);
-      const labelY = center.y + Math.sin(angle) * (maxRadius + 22);
-      const text = document.createElementNS(svgNS, 'text');
-      text.setAttribute('x', labelX);
-      text.setAttribute('y', labelY);
-      text.setAttribute('font-size', '11');
-      text.setAttribute('text-anchor', Math.cos(angle) > 0.1 ? 'start' : (Math.cos(angle) < -0.1 ? 'end' : 'middle'));
-      text.setAttribute('dominant-baseline', Math.sin(angle) > 0.25 ? 'hanging' : (Math.sin(angle) < -0.25 ? 'baseline' : 'middle'));
-      text.setAttribute('fill', 'rgba(230,238,248,0.9)');
-      text.textContent = a.label;
-      gridGroup.appendChild(text);
-    });
-
-    // percent tick labels (optional, subtle)
-    ringSteps.forEach(percent=>{
-      const r = (percent/100) * maxRadius;
-      const t = document.createElementNS(svgNS,'text');
-      t.setAttribute('x', center.x + 6);
-      t.setAttribute('y', center.y - r - 4);
-      t.setAttribute('font-size','10');
-      t.setAttribute('fill','rgba(148,163,184,0.6)');
-      t.textContent = percent + '%';
-      gridGroup.appendChild(t);
-    });
-  }
-
-  // compute polygon points relative to center (for transformed group centered at 210,210)
-  function computePolygonPoints(values){
-    const pts = [];
-    // careful arithmetic: compute each angle and radius precisely
-    for (let i=0;i<axes.length;i++){
-      const a = axes[i];
-      const percent = values[a.key];
-      // angle in radians, start -90deg to put first axis at top
-      const angle = -Math.PI/2 + (2*Math.PI*i/axes.length);
-      // length = percent/100 * maxRadius
-      // compute digit-by-digit style per instruction:
-      // ensure percent parsed as integer
-      const p = Math.max(0, Math.min(100, Math.round(percent)));
-      const length = (p / 100) * maxRadius;
-      // x = cos(angle) * length
-      const x = Math.cos(angle) * length;
-      const y = Math.sin(angle) * length;
-      pts.push({ x: +x.toFixed(3), y: +y.toFixed(3), percent: p, angle });
-    }
-    return pts;
-  }
-
-  // render polygon and dots
-  const polyEl = document.getElementById('radarPoly');
-  const dotsGroup = document.getElementById('radarDots');
-
-  function render(values){
-    const pts = computePolygonPoints(values);
-    // compose polygon points string (x,y pairs)
-    const ptsStr = pts.map(p => `${p.x},${p.y}`).join(' ');
-
-    polyEl.setAttribute('points', ptsStr);
-
-    // draw dots for each vertex
-    dotsGroup.innerHTML = '';
-    pts.forEach((p, i)=>{
-      const circle = document.createElementNS(svgNS,'circle');
-      circle.setAttribute('cx', p.x);
-      circle.setAttribute('cy', p.y);
-      circle.setAttribute('r', 4);
-      circle.setAttribute('fill', '#fff');
-      circle.setAttribute('opacity','0.9');
-      circle.setAttribute('stroke','rgba(0,0,0,0.12)');
-      circle.setAttribute('stroke-width','1');
-      // tooltip via title
-      const title = document.createElementNS(svgNS,'title');
-      title.textContent = `${axes[i].label}: ${p.percent}%`;
-      circle.appendChild(title);
-      dotsGroup.appendChild(circle);
-    });
-  }
-
-  // initial draw
-  drawGrid();
-  function update(){
-    const vals = readValues();
-    render(vals);
-  }
-
-  // wire reset & defaults buttons
-  document.getElementById('resetBtn').addEventListener('click', ()=>{
-    // reset to zeros
-    axes.forEach(a => {
-      document.getElementById('range_' + a.key).value = 0;
-      document.getElementById('num_' + a.key).value = 0;
-    });
-    update();
-  });
-  document.getElementById('fillDefaults').addEventListener('click', ()=>{
-    axes.forEach(a => {
-      const v = defaults[a.key] ?? 50;
-      document.getElementById('range_' + a.key).value = v;
-      document.getElementById('num_' + a.key).value = v;
-    });
-    update();
-  });
-
-  // initialize with balanced defaults
-  document.getElementById('fillDefaults').click();
-
-  // accessibility: keyboard shortcuts (numbers 1..6 focus corresponding slider)
-  window.addEventListener('keydown', (e)=>{
-    if (e.key >= '1' && e.key <= String(axes.length)){
-      const idx = Number(e.key) - 1;
-      document.getElementById('range_' + axes[idx].key).focus();
-    }
-  });
-
-  // expose update for manual calls (dev console)
-  window.frontendRadarUpdate = update;
-
-})();
-</script>
+  <script src="script.js" defer></script>
 </body>
 </html>
