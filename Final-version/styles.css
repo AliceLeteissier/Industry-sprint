@@ -1,0 +1,141 @@
+/* ---------- variables & globals ---------- */
+:root{
+  --bg: #f6fbfa;
+  --card: #ffffff;
+  --accent: #5eead4;
+  --accent-2: #14b8a6;
+  --muted: #6b7280;
+  --glass: rgba(0,0,0,0.03);
+  --card-radius: 12px;
+  --max-width: 1200px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: #0f1724;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  padding:28px 16px;
+}
+
+/* container */
+.container{
+  width:100%;
+  max-width:var(--max-width);
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  animation: fadeInUp 0.8s ease both;
+}
+
+/* header */
+.header { text-align:center; margin-bottom:4px }
+.header h1 { font-size:2.4rem; font-weight:700; margin-bottom:6px }
+.subtitle { color:var(--muted); font-size:1rem }
+
+/* layout */
+.main-grid{
+  display:flex;
+  gap:20px;
+  align-items:flex-start;
+  flex-wrap:wrap;
+}
+
+/* cards */
+.card{
+  background:var(--card);
+  border-radius:var(--card-radius);
+  padding:16px;
+  box-shadow: 0 8px 28px rgba(16,24,40,0.06);
+  border:1px solid rgba(16,24,40,0.03);
+}
+
+/* radar section */
+.radar-section{
+  flex:1 1 540px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:stretch;
+  min-width:320px;
+}
+
+/* top row in radar card */
+.radar-top{ display:flex; gap:12px; align-items:center; justify-content:space-between; }
+.role-label{ font-weight:600; color:var(--muted); font-size:0.95rem; }
+.role-select{ padding:8px 10px; border-radius:8px; border:1px solid rgba(0,0,0,0.06); font-weight:600 }
+
+/* chart wrapper */
+.radar-wrap{
+  width:100%;
+  height:auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:12px 0 10px; /* slightly increased padding */
+}
+
+/* make radar chart text labels smaller */
+#radarSvg text {
+  font-size: 8px !important;       /* smaller than before */
+  fill: rgba(16,24,40,0.85);
+  text-anchor: middle;
+}
+
+/* legend */
+.radar-legend{ display:flex; gap:12px; align-items:center; justify-content:center; margin-top:6px }
+.legend-item{ display:flex; gap:8px; align-items:center; color:var(--muted); font-weight:600; font-size:0.95rem }
+.legend-swatch{ width:14px; height:14px; border-radius:4px; display:inline-block; }
+.legend-swatch.user{ background: linear-gradient(180deg,var(--accent),var(--accent-2)); box-shadow:0 4px 10px rgba(20,184,166,0.12) }
+.legend-swatch.bench{ background: linear-gradient(180deg,#ccf7ef,#9ff3e1); border:1px dashed rgba(11,131,128,0.7) }
+
+/* inputs */
+.inputs-section{
+  flex:1 1 380px;
+  min-width:280px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.inputs{ display:flex; flex-direction:column; gap:12px; }
+
+/* single input row */
+.input-row{
+  display:grid;
+  grid-template-columns: 1fr 88px;
+  gap:10px;
+  align-items:center;
+  padding:10px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.01), rgba(0,0,0,0.01));
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.03);
+}
+.input-meta strong{ font-size:0.98rem; display:block }
+.input-meta small{ color:var(--muted); font-size:0.85rem }
+
+/* controls column */
+.controls{ display:flex; align-items:center; gap:8px }
+input[type="range"]{ width:100%; -webkit-appearance:none; height:28px; background:transparent }
+input[type="range"]::-webkit-slider-runnable-track{ height:6px; border-radius:999px; background: linear-gradient(90deg,#dffaf5,#bff3e8) }
+input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; width:16px;height:16px;border-radius:50%; background:var(--accent); margin-top:-5px; box-shadow:0 3px 8px rgba(20,184,166,0.25) }
+input[type="number"]{ width:72px; text-align:right; font-weight:600 }
+
+/* control row (buttons) */
+.controls-row{ display:flex; gap:8px; align-items:center; margin-top:8px; }
+.btn{ padding:10px 12px; border-radius:10px; background:rgba(94,234,212,0.12); color:var(--accent-2); border:1px solid rgba(94,234,212,0.24); font-weight:700; cursor:pointer; }
+.muted-tip{ margin-left:auto; color:var(--muted); font-size:0.9rem }
+
+/* polygon transition */
+.radar-polygon{ transition: all 260ms cubic-bezier(.2,.9,.2,1); transform-origin:center }
+
+/* responsive */
+@media (max-width:900px){
+  .main-grid{ flex-direction:column; align-items:stretch }
+  .radar-section{ order: -1 } /* radar above inputs on mobile */
+}
+
+/* page animation */
+@keyframes fadeInUp { from { opacity:0; transform: translateY(16px) } to { opacity:1; transform:none } }
